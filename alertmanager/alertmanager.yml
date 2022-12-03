@@ -1,0 +1,14 @@
+route:
+    receiver: devops/admin
+receivers:
+    - name: 'devops/admin'
+      email_configs:
+          - to: 'Bazarutyunyan@gmail.com'
+            from: 'alert@bazcorp.com'
+            require_tls: false
+            #auth_username: 'alertmanager'
+            #auth_password: 'password'
+            #auth_secret: 'secret'
+            #auth_identity: 'identity'
+            smarthost: 172.17.0.6:25
+            send_resolved: true
