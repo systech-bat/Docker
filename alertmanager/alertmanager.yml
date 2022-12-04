@@ -10,5 +10,5 @@ receivers:
             #auth_password: 'password'
             #auth_secret: 'secret'
             #auth_identity: 'identity'
-            smarthost: 172.17.0.6:25
+            smarthost: ubuntuserver.vmware.local:25
             send_resolved: true
