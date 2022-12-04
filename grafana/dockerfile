@@ -1,0 +1,22 @@
+FROM grafana/grafana-oss:9.3.1-ubuntu
+MAINTAINER EdwardArutyunyan
+LABEL Grafana=v1.1 
+
+# copy data source 
+COPY datasources.yml /etc/grafana/provisioning/datasources
+
+# copy default dashboard config
+COPY default_dash.yml /etc/grafana/provisioning/dashboards/ 
+
+# copy default dashboard
+COPY dash.json /var/lib/grafana/dashboards/
+
+#Mount PV for database and plugins
+VOLUME     [ "/var/lib/grafana" ]
+
+# Docker start 
+ENTRYPOINT ["/run.sh"]
+
+
+
+
