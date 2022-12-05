@@ -1,0 +1,23 @@
+FROM ubuntu:22.04
+MAINTAINER EdwardArutyunyan
+LABEL prometheus_alertmanager=v1.1
+
+# install alertmanager
+RUN apt-get update \
+&& apt -y install prometheus-alertmanager \
+                  nano \
+                  \
+&& apt-get  -y clean \
+&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# open port
+expose 9093
+
+# default workdir
+WORKDIR /etc/prometheus
+
+# copy config
+COPY alertmanager.yml ./
+
+# docker start
+ENTRYPOINT [ "/bin/prometheus-alertmanager" ]
