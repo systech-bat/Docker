@@ -19,5 +19,10 @@ WORKDIR /etc/prometheus
 # copy config
 COPY alertmanager.yml ./
 
+# mount volume to storage
+RUN mkdir /alertmanager
+VOLUME     [ "/alertmanager" ]
+
 # docker start
 ENTRYPOINT [ "/bin/prometheus-alertmanager" ]
+CMD        [ "--storage.path=/alertmanager" ]
