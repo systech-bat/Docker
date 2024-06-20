@@ -1,0 +1,9 @@
+version: '3.8'
+
+networks:
+  wordpress_network:
+    driver: bridge
+
+volumes:
+  prod_db_data: {}
+  staging_db_data: {}

@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  prod_db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: somewordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    networks:
+      - wordpress_network
+    volumes:
+      - prod_db_data:/var/lib/mysql
+
+  prod_wordpress:
+    image: wordpress:latest
+    environment:
+      WORDPRESS_DB_HOST: prod_db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_SITE_TITLE: "prod"
+    networks:
+      - wordpress_network
+    depends_on:
+      - prod_db
+    ports:
+      - "8000:80"
