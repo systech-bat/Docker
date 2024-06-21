@@ -1,9 +1,21 @@
 version: '3.8'
 
 networks:
-  wordpress_network:
-    driver: bridge
+  prod_wordpress_network:
+    external: true
+  staging_wordpress_network:
+    external: true
 
 volumes:
   prod_db_data: {}
   staging_db_data: {}
+
+secrets:
+  mysql_root_password:
+    external: true
+  mysql_user:
+    external: true
+  mysql_password:
+    external: true
+  mysql_database:
+    external: true
