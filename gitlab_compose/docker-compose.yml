@@ -21,6 +21,9 @@ services:
       start_period: 15m
     environment:
       GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://gitlab.bazcorp.com:83'
+        nginx['listen_port'] = 80
+        nginx['listen_https'] = false
         gitlab_rails['smtp_enable'] = true
         gitlab_rails['smtp_address'] = "maildev.example.ru"
         gitlab_rails['smtp_openssl_verify_mode'] = 'none'
