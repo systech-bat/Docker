@@ -1,0 +1,78 @@
+version: '3.7'
+services:
+  prometheus:
+    container_name: promet01
+    image: promet:compose
+    ports:
+      - "83:9090"
+    networks:
+      monitoring:
+        ipv4_address: 172.10.10.2
+    volumes:
+      - type: volume
+        source: prometheus_tsdb
+        target: /prometheus
+    restart: unless-stopped
+
+  grafana:
+    container_name: grafana01
+    image: grafana:compose
+    ports:
+      - "84:3000"
+    networks:
+      monitoring:
+        ipv4_address: 172.10.10.3
+    volumes:
+      - type: volume
+        source: grafana_db
+        target: /var/lib/grafana
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+
+  alertmanager:
+    container_name: alertmanager01
+    image: alert:compose
+    ports:
+      - "85:9093"
+    networks:
+      monitoring:
+        ipv4_address: 172.10.10.4
+    volumes:
+      - type: volume
+        source: alertmanager-data
+        target: /alertmanager
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+    command:
+      - '--cluster.advertise-address=0.0.0.0:9093'
+
+  postfix:
+    container_name: postfix01
+    image: postfix:compose
+    ports:
+      - "25:25"
+    networks:
+      monitoring:
+        ipv4_address: 172.10.10.5
+    depends_on:
+      - alertmanager
+    restart: unless-stopped
+    command:
+      - ' bazcorp.com'
+
+networks:
+   monitoring:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.10.10.0/24
+
+
+
+volumes:
+  prometheus_tsdb:
+  grafana_db:
+  alertmanager-data:
