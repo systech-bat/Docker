@@ -21,7 +21,7 @@ services:
       start_period: 15m
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'http://gitlab.bazcorp.com:83'
+        external_url 'http://gitlab.bazcorp.com'
         nginx['listen_port'] = 80
         nginx['listen_https'] = false
         gitlab_rails['smtp_enable'] = true
@@ -30,7 +30,7 @@ services:
         gitlab_rails['smtp_port'] = 1025
         gitlab_rails['gitlab_shell_ssh_port'] = 22
     ports:
-      - "83:80"
+      - "80:80"
       - "4443:443"
       - "2222:22"
     volumes:
